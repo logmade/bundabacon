@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ogn | bio</title>
+    
+    <!-- SEO & Embed Meta Tags -->
+    <meta name="description" content="ogn's personal bio site. Developer, Discord admin, domain owner.">
+    <meta name="keywords" content="ogn, 1900ogn, skidkilla, dedsec, developer, bio, discord">
+    <meta property="og:title" content="ogn // Digital Hub">
+    <meta property="og:description" content="Explore my projects, domains, and connect on Discord.">
+    <!-- You'll need to host an image for this to work -->
+    <!-- <meta property="og:image" content="https://your-domain.com/og-image.png">  -->
+    <meta property="og:url" content="https://ogn.lol"> <!-- Assuming this will be the main site URL -->
+    <meta name="theme-color" content="#7543e8"> <!-- Accent color for embeds/browser UI -->
+
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👤</text></svg>">
+
+    <!-- Google Fonts (Pixelated/Tech Look) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Roboto+Mono:wght@300;400&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #7d41e8; /* Slightly adjusted purple */
+            --secondary: #5271ff; /* Brighter blue */
+            --accent: #ff5e62;
+            --background: #0a0a0f;
+            --surface: #11111a;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --glow-primary: rgba(125, 65, 232, 0.5);
+            --glow-secondary: rgba(82, 113, 255, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text-primary);
+            font-family: 'Roboto Mono', monospace;
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            cursor: none; /* Hide default cursor */
+        }
+
+        /* Custom Cursor */
+        .cursor-dot, .cursor-outline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: opacity 0.3s, transform 0.1s, width 0.3s, height 0.3s, border-color 0.3s, background-color 0.3s;
+            will-change: transform, width, height, opacity;
+        }
+
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--primary);
+            mix-blend-mode: normal; /* Changed from difference for better visibility */
+        }
+
+        .cursor-outline {
+            width: 35px;
+            height: 35px;
+            border: 2px solid var(--secondary);
+            background-color: transparent;
+            transition-duration: 0.2s; /* Slightly slower trail */
+        }
+
+        body:hover .cursor-dot, body:hover .cursor-outline {
+            opacity: 1;
+        }
+        
+        /* Cursor Hover State */
+        .cursor-hover-active .cursor-dot {
+            transform: translate(-50%, -50%) scale(0.5);
+            background-color: var(--accent);
+        }
+        .cursor-hover-active .cursor-outline {
+            transform: translate(-50%, -50%) scale(1.3);
+            border-color: var(--accent);
+            background-color: rgba(255, 94, 98, 0.1);
+        }
+
+
+        /* Background Grid Effect */
+        .digital-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 25px 25px; /* Slightly larger grid */
+            z-index: -2;
+            animation: backgroundPan 60s linear infinite;
+        }
+        
+        @keyframes backgroundPan {
+            0% { background-position: 0 0; }
+            100% { background-position: 300px 300px; }
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(17, 17, 26, 0.6); /* surface with transparency */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px 40px;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.3), 0 0 30px var(--glow-primary) inset;
+            backdrop-filter: blur(15px);
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.8s 0.2s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Header Section */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .main-title {
+            font-family: 'Silkscreen', cursive;
+            font-size: clamp(2.5rem, 6vw, 4rem); /* Responsive font size */
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 5px;
+            letter-spacing: 2px;
+            text-shadow:
+                0 0 8px var(--glow-primary),
+                0 0 15px var(--glow-primary),
+                0 0 25px var(--glow-secondary),
+                0 0 3px #fff; /* Core white for sharpness */
+            animation: neonFlicker 3s infinite alternate ease-in-out;
+        }
+        
+        @keyframes neonFlicker {
+            0%, 18%, 22%, 25%, 53%, 57%, 100% {
+                text-shadow:
+                    0 0 7px var(--glow-primary), 0 0 12px var(--glow-primary),
+                    0 0 20px var(--glow-secondary), 0 0 3px #fff;
+                opacity: 1;
+            }
+            20%, 24%, 55% {
+                text-shadow: none;
+                opacity: 0.8;
+            }
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+        }
+
+        /* Section Styling */
+        .section {
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: slideUp 0.6s ease-out forwards;
+        }
+        
+        /* Staggered section animations */
+        .section:nth-child(1) { animation-delay: 0.4s; }
+        .section:nth-child(2) { animation-delay: 0.5s; }
+        .section:nth-child(3) { animation-delay: 0.6s; }
+        .section:nth-child(4) { animation-delay: 0.7s; }
+
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-family: 'Silkscreen', cursive;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid rgba(125, 65, 232, 0.3);
+            display: inline-block;
+        }
+
+        /* Info Grid (Discord Usernames) */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+        }
+        
+        .info-card:hover {
+            transform: translateY(-3px) scale(1.02);
+            background-color: rgba(125, 65, 232, 0.1);
+            border-color: var(--primary);
+        }
+
+        .info-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-value {
+            font-size: 1rem;
+            color: var(--text-primary);
+            font-weight: 400;
+            word-break: break-all;
+        }
+
+        /* Link Grid (Domains & Socials) */
+        .link-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .link-item {
+            display: block; /* Make the whole card clickable */
+            text-decoration: none;
+            background: var(--surface);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 20px 15px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            color: var(--text-primary);
+        }
+
+        .link-item::before { /* Shine effect */
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .link-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--secondary);
+            box-shadow: 0 5px 20px rgba(82, 113, 255, 0.2);
+        }
+
+        .link-item:hover::before {
+            left: 150%;
+        }
+
+        .link-icon {
+            font-size: 1.8rem; /* Using text emojis for icons */
+            margin-bottom: 10px;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        
+        .link-item:hover .link-icon {
+            transform: scale(1.1);
+        }
+
+        .link-name {
+            font-size: 0.9rem;
+            font-weight: 400;
+            word-break: break-all;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            opacity: 0.6;
+        }
+
+        /* Responsiveness */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 10px;
+                align-items: flex-start; /* Allow scrolling on mobile */
+            }
+            .container {
+                padding: 25px 20px;
+            }
+            .info-grid, .link-grid {
+                 grid-template-columns: 1fr 1fr; /* Two columns on medium screens */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .info-grid, .link-grid {
+                 grid-template-columns: 1fr; /* Single column on small screens */
+            }
+            .main-title {
+                font-size: 2.2rem;
+            }
+            .subtitle {
+                font-size: 1rem;
+            }
+            .section-title {
+                 font-size: 1.3rem;
+            }
+            /* Hide cursor on touch devices potentially */
+            .cursor-dot, .cursor-outline {
+                 /* display: none; */ /* Uncomment if cursor is annoying on mobile */
+            }
+            body {
+                 cursor: auto; /* Restore default cursor if custom one is hidden */
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor Elements -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- Background Grid -->
+    <div class="digital-grid"></div>
+
+    <main class="container">
+        <header class="header">
+            <h1 class="main-title">OGN</h1>
+            <p class="subtitle">Developer</p>
+        </header>
+
+        <section class="section" style="animation-delay: 0.4s;">
+            <h2 class="section-title">Discord Info</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-label">Main</div>
+                    <div class="info-value">@1900ogn</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">Alt</div>
+                    <div class="info-value">@skidkilla</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">server</div>
+                    <div class="info-value">/dedsec</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" style="animation-delay: 0.5s;">
+            <h2 class="section-title">My Sites</h2>
+            <div class="link-grid">
+                <a href="https://ogn.lol" target="_blank" rel="noopener noreferrer" class="link-item">
+                    <span class="link-icon">👤</span>
+                    <span class="link-name">ogn.lol</span>
+                </a>
+                <a href="https://skidkilla.lol" target="_blank" rel="noopener noreferrer" class="link-item">
+                    <span class="link-icon">🎯</span>
+                    <span class="link-name">skidkilla.lol</span>
+                </a>
+                <a href="https://lolbot.cc" target="_blank" rel="noopener noreferrer" class="link-item">
+                    <span class="link-icon">🤖</span>
+                    <span class="link-name">lolbot.cc</span>
+                </a>
+                <a href="https://dedsec.lol" target="_blank" rel="noopener noreferrer" class="link-item">
+                    <span class="link-icon">👁️</span>
+                    <span class="link-name">dedsec.lol</span>
+                </a>
+            </div>
+        </section>
+        
+        <section class="section" style="animation-delay: 0.6s;">
+            <h2 class="section-title">Contact</h2>
+             <div class="link-grid">
+                <a href="https://t.me/skidkilla" target="_blank" rel="noopener noreferrer" class="link-item">
+                    <span class="link-icon">📲</span>
+                    <span class="link-name">DM me on Tele</span>
+                </a>
+                 <a href="https://discord.com/users/312917969715986443" target="_blank" rel="noopener noreferrer" class="link-item"> <!-- Replace USER_ID with actual ID if known, otherwise this link might not work directly -->
+                    <span class="link-icon">💬</span>
+                    <span class="link-name">DM me on Discord</span>
+                </a>
+                <!-- Add other social links here if needed -->
+            </div>
+        </section>
+
+        <footer class="footer section" style="animation-delay: 0.7s;">
+            &copy; 2025 ogn.lol
+        </footer>
+
+    </main>
+
+    <script>
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+        const hoverTargets = document.querySelectorAll('a, button, .info-card, .link-item');
+
+        // Update cursor position
+        window.addEventListener('mousemove', (e) => {
+            const posX = e.clientX;
+            const posY = e.clientY;
+
+            // Dot follows instantly
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+
+            // Outline has a slight delay using transform for smoother animation
+            // Use requestAnimationFrame for performance
+            requestAnimationFrame(() => {
+                 cursorOutline.style.left = `${posX}px`;
+                 cursorOutline.style.top = `${posY}px`;
+            });
+           
+            // Make cursor visible when mouse enters the window
+            cursorDot.style.opacity = '1';
+            cursorOutline.style.opacity = '1';
+        });
+        
+        // Hide cursor when mouse leaves the window
+         document.addEventListener('mouseleave', () => {
+            cursorDot.style.opacity = '0';
+            cursorOutline.style.opacity = '0';
+        });
+
+
+        // Add hover effect class
+        hoverTargets.forEach(target => {
+            target.addEventListener('mouseenter', () => {
+                document.body.classList.add('cursor-hover-active');
+            });
+            target.addEventListener('mouseleave', () => {
+                document.body.classList.remove('cursor-hover-active');
+            });
+        });
+        
+        // Initial hide before first move
+        cursorDot.style.opacity = '0';
+        cursorOutline.style.opacity = '0';
+
+    </script>
+</body>
+</html>
